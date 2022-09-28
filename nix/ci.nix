@@ -8,7 +8,10 @@ let
 in
 [
   (writeScriptBin "ci-check-rust-formatting" ''
-    ${cargo} fmt --check
+    ${cargo} fmt \
+      --check \
+      --all \
+      --message-format=json
   '')
 
   (writeScriptBin "local-checks" ''
