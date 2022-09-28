@@ -43,9 +43,12 @@ jobs:
 
       # Third-party Actions
       - name: Set up Rust toolchain
-        uses: actions-rs/toolchain@v1 # Uses rust-toolchain.toml by default
+        uses: actions-rs/toolchain@v1
         with:
-          components: rustfmt
+          # Required because this Action recognizes rust-toolchain
+          # but not rust-toolchain.toml
+          toolchain: "1.63.0"
+          profile: default
       - name: Check Rust formatting
         uses: LoliGothick/rustfmt-check@v0.2
         with:
