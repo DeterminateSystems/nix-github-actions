@@ -50,7 +50,7 @@ jobs:
           toolchain: "1.63.0"
           profile: default
       - name: Check Rust formatting
-        uses: LoliGothick/rustfmt-check@v0.2
+        uses: actions-rs/cargo@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          flags: --all
+          command: fmt
+          args: --check --all
