@@ -36,12 +36,14 @@
       (system:
       let
         pkgs = import nixpkgs { inherit overlays system; };
+
+        ci = import ./nix/ci.nix { inherit pkgs; };
       in
       {
         devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
+          buildInputs = (with pkgs; [
             rustToolchain
-          ];
+          ]) ++ ci;
 
           shellHook = ''
             echo "${name} ${version}"
