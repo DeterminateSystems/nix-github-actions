@@ -1,4 +1,4 @@
-name: Check and build the TODOs API
+name: Check and build the TODOs API (no Nix)
 
 on:
   push:
@@ -53,4 +53,4 @@ jobs:
         uses: LoliGothick/rustfmt-check@v0.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          flags: --check --all --message-format=json
+          flags: --check --all

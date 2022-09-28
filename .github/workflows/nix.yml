@@ -1,4 +1,4 @@
-name: Check and build the TODOs API
+name: Check and build the TODOs API (Nix)
 
 on:
   push:
