@@ -16,6 +16,17 @@ in
       --all
   '')
 
+  (writeScriptBin "ci-check-editorconfig" ''
+    ${run "eclint"} -exclude "Cargo.lock"
+  '')
+
+  (writeScriptBin "ci-check-spelling" ''
+    ${run "codespell"} \
+      --skip target \
+      --ignore-words-list crate \
+      .
+  '')
+
   (writeScriptBin "ci-cargo-build" ''
     ${cargo} build --release --all-features
   '')
@@ -24,13 +35,11 @@ in
     ${cargo} test --no-fail-fast
   '')
 
-  (writeScriptBin "ci-check-editorconfig" ''
-    ${run "eclint"} -exclude "Cargo.lock"
-  '')
-
   # A helper script for running the CI suite locally
   (writeScriptBin "local-checks" ''
     ci-check-rust-formatting
+    ci-check-editorconfig
+    ci-check-spelling
     ci-cargo-build
     ci-cargo-test
   '')

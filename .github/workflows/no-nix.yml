@@ -36,6 +36,11 @@ jobs:
         uses: reviewdog/action-eclint@v1
         with:
           eclint_flags: -exclude "Cargo.lock"
+      - name: Check spelling
+        uses: codespell-project/actions-codespell@master
+        with:
+          exclude_file: target
+          ignore_words_list: crate
 
   build_and_test_no-nix:
     strategy:
