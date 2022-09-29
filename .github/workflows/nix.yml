@@ -1,3 +1,4 @@
+# Our desired pipeline using only a Nix shell environment
 name: Check and build the TODOs API (Nix)
 
 on:

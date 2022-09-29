@@ -38,15 +38,28 @@ in
   '')
 
   (writeScriptBin "ci-cargo-test" ''
-    ${cargo} test --no-fail-fast
+    ${cargo} test
+  '')
+
+  (writeScriptBin "display-result" ''
+    if [ $? -eq 0 ]; then
+      result="SUCCESS"
+    else
+      result="FAILURE"
+    fi
+    echo "Local CI result: $result"
   '')
 
   # A helper script for running the CI suite locally
-  (writeScriptBin "local-checks" ''
+  (writeScriptBin "ci-local" ''
     ci-check-rust-formatting
+    ci-cargo-audit
     ci-check-editorconfig
     ci-check-spelling
-    ci-cargo-build
+
     ci-cargo-test
+    ci-cargo-build
+
+    display-result
   '')
 ]
