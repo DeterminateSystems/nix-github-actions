@@ -51,3 +51,5 @@ jobs:
             ~/.cargo/git/db/
             target/
           key: todos-app-${{ hashFiles('**/Cargo.lock') }}
+      - name: Build TODOs API
+        run: nix develop --command ci-cargo-build
