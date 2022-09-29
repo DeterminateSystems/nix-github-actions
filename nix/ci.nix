@@ -28,7 +28,9 @@ in
   '')
 
   (writeScriptBin "ci-cargo-build" ''
-    ${cargo} build --release --all-features
+    ${cargo} build \
+      --release \
+      --all-features
   '')
 
   (writeScriptBin "ci-cargo-test" ''

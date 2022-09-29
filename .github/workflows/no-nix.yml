@@ -39,7 +39,7 @@ jobs:
       - name: Check spelling
         uses: codespell-project/actions-codespell@master
         with:
-          exclude_file: target
+          skip: target
           ignore_words_list: crate
 
   build_and_test_no-nix:
