@@ -45,6 +45,7 @@
           buildInputs = (with pkgs;
             [
               rustToolchain
+              cargo-deny
               cargo-edit
             ]) ++ ci;
 

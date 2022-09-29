@@ -32,6 +32,10 @@ jobs:
         with:
           command: fmt
           args: --check --all
+      - name: Audit Rust code
+        uses: EmbarkStudios/cargo-deny-action@v1
+        with:
+          command: check
       - name: editorconfig check
         uses: reviewdog/action-eclint@v1
         with:

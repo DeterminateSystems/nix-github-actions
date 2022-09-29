@@ -16,6 +16,10 @@ in
       --all
   '')
 
+  (writeScriptBin "ci-cargo-audit" ''
+    ${run "cargo-deny"} check
+  '')
+
   (writeScriptBin "ci-check-editorconfig" ''
     ${run "eclint"} -exclude "Cargo.lock"
   '')

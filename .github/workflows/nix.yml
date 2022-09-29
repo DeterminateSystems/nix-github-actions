@@ -26,6 +26,8 @@ jobs:
       # Nix-specific logic begins here
       - name: Check Rust formatting
         run: nix develop --command ci-check-rust-formatting
+      - name: Audit Rust code
+        run: nix develop --command ci-cargo-audit
       - name: editorconfig check
         run: nix develop --command ci-check-editorconfig
       - name: Check spelling
