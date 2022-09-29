@@ -35,7 +35,7 @@ jobs:
         run: nix develop --command ci-check-spelling
 
   build_and_test_nix:
-    name: Build TODOs API
+    name: Test and build TODOs API
     strategy:
       matrix:
         os: [ubuntu-22.04, macos-12]

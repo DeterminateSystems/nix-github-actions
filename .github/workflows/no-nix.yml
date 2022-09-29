@@ -48,6 +48,7 @@ jobs:
           ignore_words_list: crate
 
   build_and_test_no-nix:
+    name: Test and build TODOs API
     strategy:
       matrix:
         os: [ubuntu-22.04, macos-12]
