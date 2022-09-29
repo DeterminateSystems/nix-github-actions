@@ -45,7 +45,7 @@ jobs:
         with:
           command: fmt
           args: --check --all
-      - name: Check Clippy
+      - name: Run Clippy
         uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}

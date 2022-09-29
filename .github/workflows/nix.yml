@@ -44,3 +44,5 @@ jobs:
       # Nix-specific logic begins here
       - name: Check Rust formatting
         run: nix develop --command ci-check-rust-formatting
+      - name: Run Clippy
+        run: nix develop --command ci-clippy
