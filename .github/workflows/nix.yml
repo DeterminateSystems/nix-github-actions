@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  check:
+  check-nix:
     name: TODOs API checks
     strategy:
       matrix:

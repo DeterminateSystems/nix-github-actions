@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  check:
+  check-nonix:
     name: TODOs API checks
     strategy:
       matrix:
@@ -20,16 +20,6 @@ jobs:
     steps:
       - name: git checkout
         uses: actions/checkout@v3
-      - name: Install Nix
-        uses: cachix/install-nix-action@v17
-        with:
-          extra_nix_config: |
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-      - name: Set up Cachix
-        uses: cachix/cachix-action@v10
-        with:
-          name: lucperkins-dev
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Cache Cargo assets
         uses: actions/cache@v3
         with:
@@ -48,9 +38,15 @@ jobs:
           # Required because this Action recognizes rust-toolchain
           # but not rust-toolchain.toml
           toolchain: "1.63.0"
-          profile: default
+          profile: minimal
+          components: clippy, rustfmt
       - name: Check Rust formatting
         uses: actions-rs/cargo@v1
         with:
           command: fmt
           args: --check --all
+      - name: Check Clippy
+        uses: actions-rs/clippy-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --all-targets -- --deny warnings

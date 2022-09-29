@@ -13,11 +13,13 @@ in
       --all
   '')
 
-  (writeScriptBin "local-checks" ''
-    ci-check-rust-formatting
+  (writeScriptBin "ci-clippy" ''
+    ${cargo} clippy --all-targets -- --deny warnings
   '')
 
-  (writeScriptBin "ci-checks" ''
+  # A helper script for running the CI suite locally
+  (writeScriptBin "local-checks" ''
     ci-check-rust-formatting
+    ci-clippy
   '')
 ]
