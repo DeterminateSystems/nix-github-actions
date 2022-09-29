@@ -41,9 +41,12 @@
       in
       {
         devShells.default = pkgs.mkShell {
-          buildInputs = (with pkgs; [
-            rustToolchain
-          ]) ++ ci;
+
+          buildInputs = (with pkgs;
+            [
+              rustToolchain
+              cargo-edit
+            ]) ++ ci;
 
           shellHook = ''
             echo "${name} ${version}"

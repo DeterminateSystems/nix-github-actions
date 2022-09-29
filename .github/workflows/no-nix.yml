@@ -11,25 +11,12 @@ on:
       - main
 
 jobs:
-  check-nonix:
-    name: TODOs API checks
-    strategy:
-      matrix:
-        os: [ubuntu-22.04, macos-12]
+  check_no-nix:
+    name: Check TODOs API
     runs-on: ubuntu-22.04
     steps:
       - name: git checkout
         uses: actions/checkout@v3
-      - name: Cache Cargo assets
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: todos-app-${{ hashFiles('**/Cargo.lock') }}
 
       # Third-party Actions
       - name: Set up Rust toolchain
@@ -45,8 +32,35 @@ jobs:
         with:
           command: fmt
           args: --check --all
-      - name: Run Clippy
-        uses: actions-rs/clippy-check@v1
+
+  build_no-nix:
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, macos-12]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v3
+      - name: Set up Rust cache
+        uses: actions/cache@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-targets -- --deny warnings
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: todos-app-${{ hashFiles('**/Cargo.lock') }}
+      - name: Set up Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          # Required because this Action recognizes rust-toolchain
+          # but not rust-toolchain.toml
+          toolchain: "1.63.0"
+          profile: minimal
+          components: clippy, rustfmt
+      - name: Build TODOs API
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release --all-features
