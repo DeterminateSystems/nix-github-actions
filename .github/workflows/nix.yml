@@ -26,6 +26,8 @@ jobs:
       # Nix-specific logic begins here
       - name: Check Rust formatting
         run: nix develop --command ci-check-rust-formatting
+      - name: editorconfig check
+        run: nix develop --command ci-check-editorconfig
 
   build_and_test_nix:
     name: Build TODOs API

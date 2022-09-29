@@ -32,6 +32,10 @@ jobs:
         with:
           command: fmt
           args: --check --all
+      - name: editorconfig check
+        uses: reviewdog/action-eclint@v1
+        with:
+          eclint_flags: -exclude "Cargo.lock"
 
   build_and_test_no-nix:
     strategy:
