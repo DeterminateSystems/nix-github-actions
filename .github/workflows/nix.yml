@@ -27,7 +27,7 @@ jobs:
       - name: Check Rust formatting
         run: nix develop --command ci-check-rust-formatting
 
-  build_nix:
+  build_and_test_nix:
     name: Build TODOs API
     strategy:
       matrix:
@@ -51,5 +51,7 @@ jobs:
             ~/.cargo/git/db/
             target/
           key: todos-app-${{ hashFiles('**/Cargo.lock') }}
+      - name: Test TODOs API
+        run: nix develop --command ci-cargo-test
       - name: Build TODOs API
         run: nix develop --command ci-cargo-build

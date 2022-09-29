@@ -13,17 +13,18 @@ in
       --all
   '')
 
-  (writeScriptBin "ci-clippy" ''
-    ${cargo} clippy --all-targets -- --deny warnings
-  '')
-
   (writeScriptBin "ci-cargo-build" ''
     ${cargo} build --release --all-features
+  '')
+
+  (writeScriptBin "ci-cargo-test" ''
+    ${cargo} test --no-fail-fast
   '')
 
   # A helper script for running the CI suite locally
   (writeScriptBin "local-checks" ''
     ci-check-rust-formatting
-    ci-clippy
+    ci-cargo-build
+    ci-cargo-test
   '')
 ]

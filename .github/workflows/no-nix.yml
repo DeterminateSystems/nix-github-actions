@@ -33,7 +33,7 @@ jobs:
           command: fmt
           args: --check --all
 
-  build_no-nix:
+  build_and_test_no-nix:
     strategy:
       matrix:
         os: [ubuntu-22.04, macos-12]
@@ -59,6 +59,11 @@ jobs:
           toolchain: "1.63.0"
           profile: minimal
           components: clippy, rustfmt
+      - name: Test TODOs API
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --no-fail-fast
       - name: Build TODOs API
         uses: actions-rs/cargo@v1
         with:
