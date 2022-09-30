@@ -50,7 +50,7 @@
             ]) ++ ci;
 
           shellHook = ''
-            echo "${name} ${version}"
+            echo "project: <${name} v${version}>"
           '';
         };
       });
