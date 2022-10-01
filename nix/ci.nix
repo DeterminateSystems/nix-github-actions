@@ -41,15 +41,6 @@ in
     ${cargo} test
   '')
 
-  (writeScriptBin "display-result" ''
-    if [ $? -eq 0 ]; then
-      result="SUCCESS"
-    else
-      result="FAILURE"
-    fi
-    echo "Local CI result: $result"
-  '')
-
   # A helper script for running the CI suite locally
   (writeScriptBin "ci-local" ''
     ci-check-rust-formatting
@@ -59,7 +50,5 @@ in
 
     ci-cargo-test
     ci-cargo-build
-
-    display-result
   '')
 ]
