@@ -16,7 +16,7 @@
     , flake-utils
     , rust-overlay
     }:
-    # System-non-specific logic
+    # Non-system-specific logic
     let
       # Borrow project metadata from the Rust config
       meta = (builtins.fromTOML (builtins.readFile ./Cargo.toml)).package;
@@ -37,6 +37,7 @@
       let
         pkgs = import nixpkgs { inherit overlays system; };
 
+        # Import CI scripts
         ci = import ./nix/ci.nix { inherit pkgs; };
       in
       {
@@ -46,7 +47,6 @@
             [
               rustToolchain
               cargo-deny
-              cargo-edit
             ]) ++ ci;
 
           shellHook = ''

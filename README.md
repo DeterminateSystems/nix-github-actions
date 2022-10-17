@@ -1,10 +1,33 @@
 # Nix + GitHub Actions
 
-Two separate pipelines:
+This repo houses an example project that shows you how to use [Nix] to replace
+some third-party Actions in your [GitHub Actions][actions] CI pipelines. The
+build artifact in the repo is a simple "TODOs" web server written in [Rust]. The
+CI pipeline does several things:
 
-* [`no-nix.yml`](./.github/workflows/no-nix.yml) configures a pipeline that uses third-party Actions
-  for everything:
-  * [`actions/checkout`][checkout]
-* [`nix.yml`](./.github/workflows/nix.yml) configures a pipeline that
+* Checks the Rust formatting using [rustfmt]
+* Audits the Rust code using [`cargo-deny`][cargo-deny]
+* Checks the repo's files for [EditorConfig] conformance
+* Spellchecks the repo's files using [codespell]
+* Runs the service's [tests]
+* Builds the service using [Cargo]
 
+But different from most repos, there are two separate pipelines here that do the
+same thing:
+
+* [`no-nix.yml`](./.github/workflows/no-nix.yml) configures a pipeline that uses
+  third-party Actions for *all* CI logic.
+* [`nix.yml`](./.github/workflows/nix.yml) configures a pipeline that replaces
+  most third-party Actions with [Nix scripts][scripts].
+
+[actions]: https://github.com/features/actions
+[cargo]: TODO
+[cargo-deny]: TODO
 [checkout]: https://github.com/marketplace/actions/checkout
+[codespell]: TODO
+[editorconfig]: TODO
+[nix]: https://nixos.org
+[rust]: https://rust-lang.org
+[rustfmt]: TODO
+[scripts]: ./nix/ci.nix
+[tests]: ./src/main.rs#L47-L86
