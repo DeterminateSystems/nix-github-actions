@@ -53,5 +53,26 @@
             echo "project: <${name} v${version}>"
           '';
         };
+
+        packages = rec {
+          default = pkgs.rustPlatform.buildRustPackage {
+            pname = name;
+            inherit version;
+
+            src = ./.;
+
+            cargoSha256 = "sha256-nLnEn3jcSO4ChsXuCq0AwQCrq/0KWvw/xWK1s79+zBs=";
+          };
+
+          docker = pkgs.dockerTools.buildLayeredImage {
+            inherit name;
+            tag = "v${version}";
+
+            config = {
+              Entrypoint = [ "${self.packages.${system}.default}/bin/${name}" ];
+              ExposedPorts."8080/tcp" = { };
+            };
+          };
+        };
       });
 }
