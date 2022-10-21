@@ -36,6 +36,7 @@ jobs:
 
   build_and_test_nix:
     name: Test and build TODOs API
+    needs: check_nix
     strategy:
       matrix:
         os: [ubuntu-22.04, macos-12]
