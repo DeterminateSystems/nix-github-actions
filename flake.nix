@@ -48,10 +48,6 @@
               rustToolchain
               cargo-deny
             ]) ++ ci;
-
-          shellHook = ''
-            echo "project: <${name} v${version}>"
-          '';
         };
 
         packages = rec {
