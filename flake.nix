@@ -27,6 +27,7 @@
         (import rust-overlay)
         # Build Rust toolchain using helpers from rust-overlay
         (self: super: {
+          # This supplies cargo, rustc, rustfmt, etc.
           rustToolchain = super.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
         })
       ];
@@ -45,10 +46,15 @@
           # Local development
           default = pkgs.mkShell {
             buildInputs = (with pkgs; [
+              # Rust stuff
               rustToolchain
               cargo-deny
               cargo-edit
               cargo-watch
+
+              # Misc
+              codespell
+              eclint
             ]) ++ ciScripts;
           };
 
@@ -56,8 +62,13 @@
           ci = pkgs.mkShell {
             buildInputs = (with pkgs;
               [
+                # Rust stuff
                 rustToolchain
                 cargo-deny
+
+                # Misc
+                codespell
+                eclint
               ]) ++ ciScripts;
           };
         };
