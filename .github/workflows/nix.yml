@@ -62,6 +62,6 @@ jobs:
       - name: Test TODOs API
         run: nix develop --command ci-cargo-test
       - name: Build TODOs API
-        run: nix develop --command ci-cargo-build
+        run: nix build
       - name: Build TODOs image
         run: nix build .#docker

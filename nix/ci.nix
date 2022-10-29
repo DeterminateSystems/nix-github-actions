@@ -31,12 +31,6 @@ in
       .
   '')
 
-  (writeScriptBin "ci-cargo-build" ''
-    ${cargo} build \
-      --release \
-      --all-features
-  '')
-
   (writeScriptBin "ci-cargo-test" ''
     ${cargo} test
   '')
@@ -49,6 +43,5 @@ in
     ci-check-spelling
 
     ci-cargo-test
-    ci-cargo-build
   '')
 ]
