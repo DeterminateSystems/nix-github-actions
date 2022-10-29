@@ -1,7 +1,7 @@
 # Nix + GitHub Actions
 
 This repo houses an example project that shows you how to use [Nix] to replace
-some third-party Actions in your [GitHub Actions][actions] CI pipelines. The
+(some) third-party Actions in your [GitHub Actions][actions] CI pipelines. The
 build artifact in the repo is a simple "TODOs" web server written in [Rust]. The
 CI pipeline does several things:
 
@@ -12,22 +12,22 @@ CI pipeline does several things:
 * Runs the service's [tests]
 * Builds the service using [Cargo]
 
-But different from most repos, there are two separate pipelines here that do the
-same thing:
+But different from most repos, there are two separate pipelines here that
+accomplish the same thing:
 
 * [`no-nix.yml`](./.github/workflows/no-nix.yml) configures a pipeline that uses
   third-party Actions for *all* CI logic.
 * [`nix.yml`](./.github/workflows/nix.yml) configures a pipeline that replaces
   most third-party Actions with [Nix scripts][scripts].
 
-[actions]: https://github.com/features/actions
-[cargo]: TODO
-[cargo-deny]: TODO
-[checkout]: https://github.com/marketplace/actions/checkout
-[codespell]: TODO
-[editorconfig]: TODO
-[nix]: https://nixos.org
-[rust]: https://rust-lang.org
-[rustfmt]: TODO
+[actions]: https://github.com/features/actions/
+[cargo]: https://doc.rust-lang.org/cargo/
+[cargo-deny]: https://doc.rust-lang.org/cargo/
+[checkout]: https://github.com/marketplace/actions/checkout/
+[codespell]: https://github.com/codespell-project/codespell/
+[editorconfig]: https://editorconfig.org/
+[nix]: https://nixos.org/
+[rust]: https://rust-lang.org/
+[rustfmt]: https://rust-lang.github.io/rustfmt/
 [scripts]: ./nix/ci.nix
 [tests]: ./src/main.rs#L47-L86
