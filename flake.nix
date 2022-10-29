@@ -40,36 +40,26 @@
 
         # Import scripts to run in CI
         ciScripts = import ./nix/ci.nix { inherit pkgs; };
+
+        shellTools = with pkgs; [
+          # Rust stuff (CI + dev)
+          rustToolchain
+          cargo-deny
+
+          # Rust stuff (dev only)
+          cargo-edit
+          cargo-watch
+
+          # Spelling and linting
+          codespell
+          eclint
+        ];
       in
       {
         devShells = {
-          # Local development
+          # Unified shell environment
           default = pkgs.mkShell {
-            buildInputs = (with pkgs; [
-              # Rust stuff
-              rustToolchain
-              cargo-deny
-              cargo-edit
-              cargo-watch
-
-              # Misc
-              codespell
-              eclint
-            ]) ++ ciScripts;
-          };
-
-          # CI
-          ci = pkgs.mkShell {
-            buildInputs = (with pkgs;
-              [
-                # Rust stuff
-                rustToolchain
-                cargo-deny
-
-                # Misc
-                codespell
-                eclint
-              ]) ++ ciScripts;
+            buildInputs = shellTools ++ ciScripts;
           };
         };
 

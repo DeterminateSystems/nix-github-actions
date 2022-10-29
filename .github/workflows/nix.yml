@@ -26,13 +26,13 @@ jobs:
 
       # Nix-specific logic begins here
       - name: Check Rust formatting
-        run: nix develop .#ci --command ci-check-rust-formatting
+        run: nix develop --command ci-check-rust-formatting
       - name: Audit Rust code
-        run: nix develop .#ci --command ci-cargo-audit
+        run: nix develop --command ci-cargo-audit
       - name: editorconfig check
-        run: nix develop .#ci --command ci-check-editorconfig
+        run: nix develop --command ci-check-editorconfig
       - name: Check spelling
-        run: nix develop .#ci --command ci-check-spelling
+        run: nix develop --command ci-check-spelling
 
   build_and_test_nix:
     name: Test and build TODOs API
@@ -60,7 +60,7 @@ jobs:
             target/
           key: todos-app-${{ hashFiles('**/Cargo.lock') }}
       - name: Test TODOs API
-        run: nix develop .#ci --command ci-cargo-test
+        run: nix develop --command ci-cargo-test
       - name: Build TODOs API
         run: nix build
       - name: Build TODOs image
