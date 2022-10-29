@@ -54,10 +54,9 @@
           default = pkgs.rustPlatform.buildRustPackage {
             pname = name;
             inherit version;
-
             src = ./.;
-
             cargoSha256 = "sha256-nLnEn3jcSO4ChsXuCq0AwQCrq/0KWvw/xWK1s79+zBs=";
+            release = true;
           };
 
           docker = pkgs.dockerTools.buildLayeredImage {

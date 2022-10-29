@@ -10,7 +10,7 @@ CI pipeline does several things:
 * Checks the repo's files for [EditorConfig] conformance
 * Spellchecks the repo's files using [codespell]
 * Runs the service's [tests]
-* Builds the service using [Cargo]
+* Builds an executable for the service
 
 But different from most repos, there are two separate pipelines here that
 accomplish the same thing:
@@ -18,10 +18,10 @@ accomplish the same thing:
 * [`no-nix.yml`](./.github/workflows/no-nix.yml) configures a pipeline that uses
   third-party Actions for *all* CI logic.
 * [`nix.yml`](./.github/workflows/nix.yml) configures a pipeline that replaces
-  most third-party Actions with [Nix scripts][scripts].
+  most third-party Actions with [Nix scripts][scripts] and commands like `nix
+  build`.
 
 [actions]: https://github.com/features/actions/
-[cargo]: https://doc.rust-lang.org/cargo/
 [cargo-deny]: https://doc.rust-lang.org/cargo/
 [checkout]: https://github.com/marketplace/actions/checkout/
 [codespell]: https://github.com/codespell-project/codespell/
