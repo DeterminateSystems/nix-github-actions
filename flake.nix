@@ -37,17 +37,29 @@
       let
         pkgs = import nixpkgs { inherit overlays system; };
 
-        # Import CI scripts
-        ci = import ./nix/ci.nix { inherit pkgs; };
+        # Import scripts to run in CI
+        ciScripts = import ./nix/ci.nix { inherit pkgs; };
       in
       {
-        devShells.default = pkgs.mkShell {
-
-          buildInputs = (with pkgs;
-            [
+        devShells = {
+          # Local development
+          default = pkgs.mkShell {
+            buildInputs = (with pkgs; [
               rustToolchain
               cargo-deny
-            ]) ++ ci;
+              cargo-edit
+              cargo-watch
+            ]) ++ ciScripts;
+          };
+
+          # CI
+          ci = pkgs.mkShell {
+            buildInputs = (with pkgs;
+              [
+                rustToolchain
+                cargo-deny
+              ]) ++ ciScripts;
+          };
         };
 
         packages = rec {
@@ -59,15 +71,19 @@
             release = true;
           };
 
-          docker = pkgs.dockerTools.buildLayeredImage {
-            inherit name;
-            tag = "v${version}";
+          docker =
+            let
+              bin = "${self.packages.${system}.default}/bin/${name}";
+            in
+            pkgs.dockerTools.buildLayeredImage {
+              inherit name;
+              tag = "v${version}";
 
-            config = {
-              Entrypoint = [ "${self.packages.${system}.default}/bin/${name}" ];
-              ExposedPorts."8080/tcp" = { };
+              config = {
+                Entrypoint = [ bin ];
+                ExposedPorts."8080/tcp" = { };
+              };
             };
-          };
         };
       });
 }
