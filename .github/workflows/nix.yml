@@ -26,13 +26,24 @@ jobs:
 
       # Nix-specific logic begins here
       - name: Check Rust formatting
-        run: nix develop --command ci-check-rust-formatting
+        run: |
+          nix develop --command \
+            cargo fmt --check
       - name: Audit Rust code
-        run: nix develop --command ci-cargo-audit
+        run: |
+          nix develop --command \
+            cargo-deny check
       - name: editorconfig check
-        run: nix develop --command ci-check-editorconfig
+        run: |
+          nix develop --command \
+            eclint \
+              -exclude "Cargo.lock"
       - name: Check spelling
-        run: nix develop --command ci-check-spelling
+        run: |
+          nix develop --command \
+            codespell \
+              --skip target,.git \
+              --ignore-words-list crate
 
   build_and_test_nix:
     name: Test and build TODOs API
@@ -60,8 +71,18 @@ jobs:
             target/
           key: todos-app-${{ hashFiles('**/Cargo.lock') }}
       - name: Test TODOs API
-        run: nix develop --command ci-cargo-test
+        run: |
+          nix develop --command \
+            cargo test
       - name: Build TODOs API
-        run: nix build
-      - name: Build TODOs image
+        # nix build would also work here because `todos` is the default package
+        run: nix build .#todos
+
+      # I don't talk about this in the blog post so consider it an Easter egg.
+      # You can indeed use Nix to build Docker containers without any need for
+      # a Dockerfile. For more info, see:
+      # https://nix.dev/tutorials/building-and-running-docker-images
+      # https://github.com/the-nix-way/nix-docker-examples/
+      # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/docker/examples.nix
+      - name: Build TODOs Docker image
         run: nix build .#docker

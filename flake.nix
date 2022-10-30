@@ -37,34 +37,32 @@
       (system:
       let
         pkgs = import nixpkgs { inherit overlays system; };
-
-        # Import scripts to run in CI
-        ciScripts = import ./nix/ci.nix { inherit pkgs; };
-
-        shellTools = with pkgs; [
-          # Rust stuff (CI + dev)
-          rustToolchain
-          cargo-deny
-
-          # Rust stuff (dev only)
-          cargo-edit
-          cargo-watch
-
-          # Spelling and linting
-          codespell
-          eclint
-        ];
       in
       {
         devShells = {
           # Unified shell environment
-          default = pkgs.mkShell {
-            buildInputs = shellTools ++ ciScripts;
-          };
+          default = pkgs.mkShell
+            {
+              buildInputs = with pkgs; [
+                # Rust stuff (CI + dev)
+                rustToolchain
+                cargo-deny
+
+                # Rust stuff (dev only)
+                cargo-edit
+                cargo-watch
+
+                # Spelling and linting
+                codespell
+                eclint
+              ];
+            };
         };
 
         packages = rec {
-          default = pkgs.rustPlatform.buildRustPackage {
+          default = todos;
+
+          todos = pkgs.rustPlatform.buildRustPackage {
             pname = name;
             inherit version;
             src = ./.;
@@ -74,7 +72,7 @@
 
           docker =
             let
-              bin = "${self.packages.${system}.default}/bin/${name}";
+              bin = "${self.packages.${system}.todos}/bin/${name}";
             in
             pkgs.dockerTools.buildLayeredImage {
               inherit name;

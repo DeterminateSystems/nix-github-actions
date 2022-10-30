@@ -1,5 +1,8 @@
 # Nix + GitHub Actions
 
+> **Note**: this repo is discussed in [Streamline your GitHub Actions
+> dependencies using Nix][post] on the [Determinate Systems blog][blog].
+
 This repo houses an example project that shows you how to use [Nix] to replace
 (some) third-party Actions in your [GitHub Actions][actions] CI pipelines. The
 build artifact in the repo is a simple "TODOs" web server written in [Rust]. The
@@ -18,16 +21,16 @@ accomplish the same thing:
 * [`no-nix.yml`](./.github/workflows/no-nix.yml) configures a pipeline that uses
   third-party Actions for *all* CI logic.
 * [`nix.yml`](./.github/workflows/nix.yml) configures a pipeline that replaces
-  most third-party Actions with [Nix scripts][scripts] and commands like `nix
-  build`.
+  most third-party Actions with straightforward shell commands.
 
 [actions]: https://github.com/features/actions/
+[blog]: https://determinate.systems/posts/
 [cargo-deny]: https://doc.rust-lang.org/cargo/
 [checkout]: https://github.com/marketplace/actions/checkout/
 [codespell]: https://github.com/codespell-project/codespell/
 [editorconfig]: https://editorconfig.org/
 [nix]: https://nixos.org/
+[post]: https://determinate.systems/posts/nix-github-actions
 [rust]: https://rust-lang.org/
 [rustfmt]: https://rust-lang.github.io/rustfmt/
-[scripts]: ./nix/ci.nix
 [tests]: ./src/main.rs#L47-L86
