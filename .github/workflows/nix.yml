@@ -21,6 +21,11 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
 
+      - name: Check Nixpkgs inputs
+        uses: DeterminateSystems/flake-checker-action@v3
+        with:
+          fail-mode: true
+
       # Nix-specific logic begins here
       - name: Check Rust formatting
         run: |
